@@ -1,0 +1,56 @@
+DELETE FROM USER_ROLES;
+DELETE FROM DISHES;
+DELETE FROM USERS;
+DELETE FROM MENUS;
+DELETE FROM RESTAURANT;
+DELETE FROM VOTES;
+ALTER SEQUENCE global_seq RESTART WITH 100000;
+
+INSERT INTO users (name, email, password) VALUES
+  ('User', 'user@yandex.ru', 'password'),
+  ('Jon', 'Jon@gmail.com', 'JonDoe12'),
+  ('Peter', 'Peter@gmail.com', 'Peter12345'),
+  ('Admin', 'admin@gmail.com', 'admin');
+
+INSERT INTO user_roles (role, user_id) VALUES
+  ('ROLE_USER', 100000),
+  ('ROLE_ADMIN', 100003);
+
+INSERT INTO DISHES ( name, calories, price)
+VALUES ('Гамбургер', 650, 60.75),
+       ('Крабовый салат', 435, 100.50),
+       ('Паэлья', 795.5, 100.50),
+       ('Гохан', 420, 100.50),
+       ('Картошка по-селянски', 600, 100.50),
+       ('Рис со шпинатом', 388, 100.50),
+       ('Крылышки BBQ', 422, 100.50),
+       ('Креветки в темпуре', 524, 100.50),
+       ('Мисо суп', 345, 100.50),
+       ('Удон суп', 480, 100.50);
+
+INSERT INTO MENUS (name)
+VALUES ('Летнее меню'),
+       ('Меню столовой'),
+       ('Меню Киевское'),
+       ('Салаты'),
+       ('Суши'),
+       ('Пицца'),
+       ('Напитки');
+
+INSERT INTO RESTAURANT (MENU_ID, NAME, ADDRESS)
+VALUES (100015,'School canteen','Florida, st.Paola street 17'),
+       (100016,'Kievsky restaurant','Kiev, Horiva street 1'),
+       (100017,'Salateria','Kiev, Shevchenka street 5'),
+       (100018,'Evrasia','Kiev, Bolshoi Val street 22'),
+       (100019,'Solo Pizza','Kiev, Petra Sagaidachnogo street 17');
+
+INSERT INTO VOTES (VOTE_DATE,USER_ID,RESTAURANT_ID)
+VALUES ('2018-09-29 10:00:00',100000,100021),
+       ('2018-09-29 11:00:00',100001,100021),
+       ('2018-09-29 09:00:00',100002,100022);
+
+INSERT INTO MENUS_DISHES (DISH_ID, MENU_ID)
+VALUES (100008,100014),
+       (100006,100014),
+       (100012,100018),
+       (100013,100018);
