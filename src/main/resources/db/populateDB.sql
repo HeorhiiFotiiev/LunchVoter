@@ -7,10 +7,11 @@ DELETE FROM VOTES;
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
 INSERT INTO users (name, email, password) VALUES
-  ('User', 'user@yandex.ru', 'password'),
-  ('Jon', 'Jon@gmail.com', 'JonDoe12'),
-  ('Peter', 'Peter@gmail.com', 'Peter12345'),
-  ('Admin', 'admin@gmail.com', 'admin');
+  ('User', 'user@yandex.ru', '{noop}password'),
+  ('Jon', 'Jon@gmail.com', '{noop}JonDoe12'),
+  ('Peter', 'Peter@gmail.com', '{noop}Peter12345'),
+  ('Admin', 'admin@gmail.com', '{noop}admin'),
+  ('New_user', 'New_user@gmail.com', '{noop}New_user');
 
 INSERT INTO user_roles (role, user_id) VALUES
   ('ROLE_USER', 100000),
@@ -38,19 +39,19 @@ VALUES ('Летнее меню'),
        ('Напитки');
 
 INSERT INTO RESTAURANT (MENU_ID, NAME, ADDRESS)
-VALUES (100015,'School canteen','Florida, st.Paola street 17'),
-       (100016,'Kievsky restaurant','Kiev, Horiva street 1'),
-       (100017,'Salateria','Kiev, Shevchenka street 5'),
-       (100018,'Evrasia','Kiev, Bolshoi Val street 22'),
-       (100019,'Solo Pizza','Kiev, Petra Sagaidachnogo street 17');
+VALUES (100016,'School canteen','Florida, st.Paola street 17'),
+       (100017,'Kievsky restaurant','Kiev, Horiva street 1'),
+       (100018,'Salateria','Kiev, Shevchenka street 5'),
+       (100019,'Evrasia','Kiev, Bolshoi Val street 22'),
+       (100020,'Solo Pizza','Kiev, Petra Sagaidachnogo street 17');
 
 INSERT INTO VOTES (VOTE_DATE,USER_ID,RESTAURANT_ID)
-VALUES ('2018-09-29 10:00:00',100000,100021),
-       ('2018-09-29 11:00:00',100001,100021),
-       ('2018-09-29 09:00:00',100002,100022);
+VALUES ('2018-09-29 10:00:00',100000,100022),
+       ('2018-09-29 11:00:00',100001,100022),
+       ('2018-09-29 09:00:00',100002,100023);
 
 INSERT INTO MENUS_DISHES (DISH_ID, MENU_ID)
-VALUES (100008,100014),
-       (100006,100014),
-       (100012,100018),
-       (100013,100018);
+VALUES (100009,100015),
+       (100007,100015),
+       (100013,100019),
+       (100014,100019);

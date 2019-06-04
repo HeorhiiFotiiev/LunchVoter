@@ -22,7 +22,7 @@ public class MenuController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    static final String REST_URL = "/rest/menu";
+    static final String REST_URL = "/rest/menus";
 
     @Autowired
     private MenuService service;
@@ -33,7 +33,7 @@ public class MenuController {
         return service.get(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("deleting menu {}",id);
@@ -42,11 +42,11 @@ public class MenuController {
 
     @GetMapping
     public List<Menu> getAll() {
-        log.info("getAll");
+        log.info("getSameRestaurantVotesAmount");
         return service.getAll();
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/admin/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody Menu menu) {
         log.info("update {} with id={}", menu,menu.getId());
@@ -54,7 +54,7 @@ public class MenuController {
         service.update(menu);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin",consumes = MediaType.APPLICATION_JSON_VALUE)
     public Menu create(@RequestBody Menu menu) {
         log.info("create {}", menu);
         checkNew(menu);

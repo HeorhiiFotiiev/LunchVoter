@@ -6,8 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 import ua.petproject.model.Vote;
 import ua.petproject.repository.vote.VoteRepository;
-
-import java.util.List;
+import ua.petproject.util.VoteUtil;
 
 import static ua.petproject.util.ValidationUtil.checkNotFoundWithId;
 
@@ -22,24 +21,30 @@ public class VoteServiceImpl implements VoteService {
     }
 
     @Override
-    public Vote get(int id) {
-        return checkNotFoundWithId(repository.get(id),id);
+    public Vote get(int id, int userId) {
+        return checkNotFoundWithId(repository.get(id, userId),id);
     }
 
     @Override
-    public List<Vote> getAll() {
-        return repository.getAll();
+    public Integer getSameRestaurantVotesAmount(int restaurantId) {
+        return repository.getSameRestaurantVotesAmount(restaurantId);
     }
 
     @Override
-    public void update(Vote vote) {
+    public void update(Vote vote, int userId) {
         Assert.notNull(vote, "vote must not be null");
-        checkNotFoundWithId(repository.save(vote), vote.getId());
+        VoteUtil.checkVotingTime(vote);
+        checkNotFoundWithId(repository.save(vote, userId), vote.getId());
     }
 
     @Override
-    public Vote create(Vote vote) {
+    public Vote create(Vote vote, int userId) {
         Assert.notNull(vote, "user must not be null");
-        return repository.save(vote);
+        return repository.save(vote, userId);
+    }
+
+    @Override
+    public void delete(int id) {
+        checkNotFoundWithId(repository.delete(id),id);
     }
 }

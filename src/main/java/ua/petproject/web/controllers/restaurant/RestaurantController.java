@@ -22,7 +22,7 @@ public class RestaurantController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    static final String REST_URL = "/rest/restaurant";
+    static final String REST_URL = "/rest/restaurants";
 
     @Autowired
     private RestaurantService service;
@@ -34,7 +34,7 @@ public class RestaurantController {
     }
 
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("deleting restaurant {}",id);
@@ -44,12 +44,12 @@ public class RestaurantController {
 
     @GetMapping
     public List<Restaurant> getAll() {
-        log.info("getAll");
+        log.info("getSameRestaurantVotesAmount");
         return service.getAll();
     }
 
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/admin/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody Restaurant restaurant) {
         log.info("update {} with id={}", restaurant,restaurant.getId());
@@ -57,7 +57,7 @@ public class RestaurantController {
         service.update(restaurant);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin",consumes = MediaType.APPLICATION_JSON_VALUE)
     public Restaurant create(@RequestBody Restaurant restaurant) {
         log.info("create {}", restaurant);
         checkNew(restaurant);

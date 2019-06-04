@@ -26,7 +26,7 @@ public class DishController{
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    static final String REST_URL = "/rest/profile/dish";
+    static final String REST_URL = "/rest/dishes";
 
     @Autowired
     private DishService service;
@@ -37,7 +37,7 @@ public class DishController{
         return service.get(id);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/{id}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void delete(@PathVariable int id) {
         log.info("deleting dish {}",id);
@@ -46,11 +46,11 @@ public class DishController{
 
     @GetMapping
     public List<Dish> getAll() {
-        log.info("getAll");
+        log.info("getSameRestaurantVotesAmount");
         return service.getAll();
     }
 
-    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/admin/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     public void update(@RequestBody Dish dish) {
         log.info("update {} with id={}", dish,dish.getId());
@@ -58,7 +58,7 @@ public class DishController{
         service.update(dish);
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/admin",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Dish> createWithLocation(@RequestBody Dish dish) {
         log.info("create {}", dish);
         checkNew(dish);

@@ -21,6 +21,7 @@ public class UserTestData {
     public static final User JON = new User(USER_ID+1, "Jon", "Jon@gmail.com", "JonDoe12", Role.ROLE_USER);
     public static final User PETER = new User(USER_ID+2, "Peter", "Peter@gmail.com", "Peter12345", Role.ROLE_USER);
     public static final User ADMIN = new User(ADMIN_ID, "Admin", "admin@gmail.com", "admin", Role.ROLE_ADMIN, Role.ROLE_USER);
+    public static final User NEW_USER = new User(USER_ID+4, "New_user", "New_user@gmail.com", "New_user", Role.ROLE_USER);
 
     public static User getCreated(){
         return new User(null, "created user","someEmail@gmail","wordpass",Role.ROLE_USER);

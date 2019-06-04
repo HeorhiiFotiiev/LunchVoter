@@ -18,7 +18,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ua.petproject.TestUtil.readFromJson;
 import static ua.petproject.TestUtil.readFromJsonMvcResult;
+import static ua.petproject.TestUtil.userHttpBasic;
+import static ua.petproject.model.Role.ADMIN_ACCESS;
 import static ua.petproject.testdata.MenuTestData.*;
+import static ua.petproject.testdata.UserTestData.ADMIN;
+import static ua.petproject.testdata.UserTestData.USER;
 
 public class MenuControllerTest extends AbstractControllerTest {
 
@@ -29,7 +33,8 @@ public class MenuControllerTest extends AbstractControllerTest {
 
     @Test
     void testGet() throws Exception {
-        mockMvc.perform(get(REST_URL + MENU1_ID))
+        mockMvc.perform(get(REST_URL + MENU1_ID)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -38,7 +43,8 @@ public class MenuControllerTest extends AbstractControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(delete(REST_URL + MENU1_ID))
+        mockMvc.perform(delete(REST_URL + ADMIN_ACCESS + MENU1_ID)
+                .with(userHttpBasic(ADMIN)))
                 .andExpect(status().isNoContent());
         assertMatch(repository.getAll(), KIEV_MENU,CANTEEN_MENU,DRINKS_MENU,PIZZA_MENU,SALADS_MENU,SUSHI_MENU);
     }
@@ -47,7 +53,9 @@ public class MenuControllerTest extends AbstractControllerTest {
     void testUpdate() throws Exception {
         Menu updated = getUpdated();
 
-        mockMvc.perform(put(REST_URL + MENU1_ID).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put(REST_URL + ADMIN_ACCESS + MENU1_ID)
+                .with(userHttpBasic(ADMIN))
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
 
@@ -57,7 +65,8 @@ public class MenuControllerTest extends AbstractControllerTest {
     @Test
     void testCreate() throws Exception {
         Menu created = getCreated();
-        ResultActions action = mockMvc.perform(post(REST_URL)
+        ResultActions action = mockMvc.perform(post(REST_URL + ADMIN_ACCESS)
+                .with(userHttpBasic(ADMIN))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(created)));
 
@@ -72,7 +81,8 @@ public class MenuControllerTest extends AbstractControllerTest {
 
     @Test
     void testGetAll() throws Exception {
-        mockMvc.perform(get(REST_URL))
+        mockMvc.perform(get(REST_URL)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

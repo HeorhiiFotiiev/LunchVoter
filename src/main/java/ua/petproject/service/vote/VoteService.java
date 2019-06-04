@@ -3,15 +3,15 @@ package ua.petproject.service.vote;
 
 import ua.petproject.model.Vote;
 
-import java.util.List;
-
 public interface VoteService {
 
-    Vote get(int id);
+    Vote get(int id, int userId);
 
-    List<Vote> getAll();
+    Integer getSameRestaurantVotesAmount(int restaurantId);
 
-    void update(Vote vote);
+    void update(Vote vote, int userId);
 
-    Vote create(Vote vote);
+    Vote create(Vote vote, int userId);
+
+    void delete(int id);
 }

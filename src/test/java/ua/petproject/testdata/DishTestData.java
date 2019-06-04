@@ -13,7 +13,7 @@ import static ua.petproject.TestUtil.readListFromJsonMvcResult;
 import static ua.petproject.model.AbstractBaseEntity.START_SEQ;
 
 public class DishTestData {
-    public static final int DISH1_ID = START_SEQ + 4;
+    public static final int DISH1_ID = START_SEQ + 5;
 
 
     public static final Dish HAMBURGER = new Dish(DISH1_ID,"Гамбургер", BigDecimal.valueOf(60.75), 650);

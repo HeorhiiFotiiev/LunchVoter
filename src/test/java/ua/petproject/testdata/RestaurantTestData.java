@@ -12,7 +12,7 @@ import static ua.petproject.testdata.MenuTestData.*;
 
 public class RestaurantTestData {
 
-    public static final int RESTAURANT1_ID = START_SEQ + 21;
+    public static final int RESTAURANT1_ID = START_SEQ + 22;
 
     public static final Restaurant SCHOOL_CANTEEN = new Restaurant(RESTAURANT1_ID,"School canteen","Florida, st.Paola street 17",CANTEEN_MENU);
     public static final Restaurant KIEVSKY_RESTAURANT = new Restaurant(RESTAURANT1_ID+1,"Kievsky restaurant","Kiev, Horiva street 1",KIEV_MENU);

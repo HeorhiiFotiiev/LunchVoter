@@ -3,7 +3,6 @@ package ua.petproject.repository.restaurant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.petproject.model.Restaurant;
@@ -21,20 +20,18 @@ public class RestaurantRepositoryImpl implements RestaurantRepository {
 
     @Override
     @Transactional
-    @CacheEvict(value = "restaurants",allEntries = true)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public Restaurant save(Restaurant restaurant) {
         if (!restaurant.isNew() && get(restaurant.getId()) == null) {
             return null;
-        }
-        else return crudRestaurantRepository.save(restaurant);
+        } else return crudRestaurantRepository.save(restaurant);
     }
 
     @Override
     @Transactional
-    @Modifying
-    @CacheEvict(value = "restaurants",allEntries = true)
+    @CacheEvict(value = "restaurants", allEntries = true)
     public boolean delete(int id) {
-        return crudRestaurantRepository.delete(id) !=0 ;
+        return crudRestaurantRepository.delete(id) != 0;
     }
 
     @Override

@@ -2,6 +2,8 @@ package ua.petproject.repository.dish;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import ua.petproject.model.Dish;
@@ -19,6 +21,7 @@ public class DishRepositoryImpl implements DishRepository {
 
     @Override
     @Transactional
+    @CacheEvict(value = "dishes", allEntries = true)
     public Dish save(Dish dish) {
         if (!dish.isNew() && get(dish.getId()) == null) {
             return null;
@@ -28,8 +31,9 @@ public class DishRepositoryImpl implements DishRepository {
 
     @Override
     @Transactional
+    @CacheEvict(value = "dishes", allEntries = true)
     public boolean delete(int id) {
-        return crudMealRepository.delete(id)!=0;
+        return crudMealRepository.delete(id) != 0;
     }
 
     @Override
@@ -38,6 +42,7 @@ public class DishRepositoryImpl implements DishRepository {
     }
 
     @Override
+    @Cacheable("dishes")
     public List<Dish> getAll() {
         return crudMealRepository.findAll(SORT_BY_NAME);
     }

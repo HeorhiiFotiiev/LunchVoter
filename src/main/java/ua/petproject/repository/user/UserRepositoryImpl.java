@@ -22,8 +22,7 @@ public class UserRepositoryImpl implements UserRepository {
     public User save(User user) {
         if (!user.isNew() && get(user.getId()) == null) {
             return null;
-        }
-        else return crudUserRepository.save(user);
+        } else return crudUserRepository.save(user);
     }
 
     @Override
@@ -46,4 +45,12 @@ public class UserRepositoryImpl implements UserRepository {
         return crudUserRepository.getAllVotedForRestaurant(restaurantId);
     }
 
+    public User getByEmail(String email) {
+        return crudUserRepository.getByEmail(email);
+    }
+
+    public void enable(int id, boolean enabled) {
+        User user = get(id);
+        user.setEnabled(enabled);
+    }
 }

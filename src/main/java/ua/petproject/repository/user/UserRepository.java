@@ -16,4 +16,10 @@ public interface UserRepository {
     List<User> getAll();
 
     List<User> getAllVotedForRestaurant(Integer restaurantId);
+
+    User getByEmail(String email);
+
+    void enable(int id, boolean enable);
+
+
 }

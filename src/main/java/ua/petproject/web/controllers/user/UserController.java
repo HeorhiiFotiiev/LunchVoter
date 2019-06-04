@@ -20,7 +20,7 @@ public class UserController {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    static final String REST_URL = "/rest/user";
+    static final String REST_URL = "/rest/users";
 
     @Autowired
     private UserService service;
@@ -47,7 +47,7 @@ public class UserController {
 
     @GetMapping
     public List<User> getAll() {
-        log.info("getAll");
+        log.info("getSameRestaurantVotesAmount");
         return service.getAll();
     }
 

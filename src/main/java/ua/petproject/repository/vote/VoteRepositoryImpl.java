@@ -18,12 +18,16 @@ public class VoteRepositoryImpl implements VoteRepository {
     @Autowired
     private CrudVoteRepository crudVoteRepository;
 
+    @Autowired
+    private CrudUserRepository crudUserRepository;
+
     @Override
-    public Vote save(Vote vote) {
-        if (!vote.isNew() && get(vote.getId()) == null) {
+    public Vote save(Vote vote, int userId) {
+        if (!vote.isNew() && get(vote.getId(), userId) == null) {
             return null;
         }
-        else return crudVoteRepository.save(vote);
+        vote.setUser(crudUserRepository.getOne(userId));
+        return crudVoteRepository.save(vote);
     }
 
     @Override
@@ -32,8 +36,13 @@ public class VoteRepositoryImpl implements VoteRepository {
     }
 
     @Override
-    public Vote get(int id) {
-        return crudVoteRepository.findById(id).orElse(null);
+    public Vote get(int id, int userId) {
+        return crudVoteRepository.findById(id).filter(vote -> vote.getUser().getId() == userId).orElse(null);
+    }
+
+    @Override
+    public Integer getSameRestaurantVotesAmount(int restaurantId) {
+        return crudVoteRepository.getSameRestaurantVotes(restaurantId);
     }
 
     @Override

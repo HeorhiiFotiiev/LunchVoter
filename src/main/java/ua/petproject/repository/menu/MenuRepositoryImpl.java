@@ -20,13 +20,12 @@ public class MenuRepositoryImpl implements MenuRepository {
     public Menu save(Menu menu) {
         if (!menu.isNew() && get(menu.getId()) == null) {
             return null;
-        }
-        else return crudMenuRepository.save(menu);
+        } else return crudMenuRepository.save(menu);
     }
 
     @Override
     public boolean delete(int id) {
-        return crudMenuRepository.delete(id)!=0;
+        return crudMenuRepository.delete(id) != 0;
     }
 
     @Override

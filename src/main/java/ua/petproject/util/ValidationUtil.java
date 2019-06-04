@@ -1,7 +1,13 @@
 package ua.petproject.util;
 
+import org.slf4j.Logger;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import ua.petproject.model.HasId;
 import ua.petproject.util.exception.NotFoundException;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.StringJoiner;
 
 public class ValidationUtil {
 
@@ -49,5 +55,24 @@ public class ValidationUtil {
             result = cause;
         }
         return result;
+    }
+
+    public static ResponseEntity<String> getErrorResponse(BindingResult result) {
+        StringJoiner joiner = new StringJoiner("<br>");
+        result.getFieldErrors().forEach(
+                fe -> {
+                    String msg = fe.getDefaultMessage();
+                    if (msg != null) {
+                        if (!msg.startsWith(fe.getField())) {
+                            msg = fe.getField() + ' ' + msg;
+                        }
+                        joiner.add(msg);
+                    }
+                });
+        return ResponseEntity.unprocessableEntity().body(joiner.toString());
+    }
+
+    public static String getMessage(Throwable e) {
+        return e.getLocalizedMessage() != null ? e.getLocalizedMessage() : e.getClass().getName();
     }
 }

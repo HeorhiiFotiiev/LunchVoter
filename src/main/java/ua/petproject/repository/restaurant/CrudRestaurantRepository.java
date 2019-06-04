@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Transactional(readOnly = true)
-public interface CrudRestaurantRepository extends JpaRepository<Restaurant,Integer> {
+public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
     @Query("DELETE FROM Restaurant r WHERE r.id=:id")
     @Transactional
@@ -27,7 +27,6 @@ public interface CrudRestaurantRepository extends JpaRepository<Restaurant,Integ
 
     @Override
     Optional<Restaurant> findById(Integer id);
-
 
 
 }

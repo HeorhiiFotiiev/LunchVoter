@@ -33,6 +33,6 @@ public interface CrudUserRepository extends JpaRepository<User, Integer> {
     User getByEmail(String email);
 
     @Query("select u from User u, Vote v where u.id=v.user and v.restaurant.id=:restaurantId")
-    List<User> getAllVotedForRestaurant( @Param("restaurantId") int restaurantId);
+    List<User> getAllVotedForRestaurant(@Param("restaurantId") int restaurantId);
 
 }

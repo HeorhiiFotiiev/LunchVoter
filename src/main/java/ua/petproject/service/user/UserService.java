@@ -17,5 +17,7 @@ public interface UserService {
 
     User create(User user);
 
+    void enable(int id, boolean enable);
+
     List<User> getAllVotedForRestaurant(int restaurantId);
 }

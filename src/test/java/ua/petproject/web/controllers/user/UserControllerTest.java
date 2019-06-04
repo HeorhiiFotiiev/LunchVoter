@@ -17,8 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ua.petproject.TestUtil.readFromJson;
-import static ua.petproject.TestUtil.readFromJsonMvcResult;
+import static ua.petproject.TestUtil.*;
 import static ua.petproject.testdata.UserTestData.*;
 
 public class UserControllerTest extends AbstractControllerTest {
@@ -30,7 +29,8 @@ public class UserControllerTest extends AbstractControllerTest {
 
     @Test
     void testGetAllVotedForRestaurant() throws Exception {
-        mockMvc.perform(get(REST_URL+"allVotedForRestaurant/"+100021))
+        mockMvc.perform(get(REST_URL+"allVotedForRestaurant/"+100021)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -39,7 +39,8 @@ public class UserControllerTest extends AbstractControllerTest {
 
     @Test
     void testGet() throws Exception {
-        mockMvc.perform(get(REST_URL + USER_ID))
+        mockMvc.perform(get(REST_URL + USER_ID)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
@@ -48,16 +49,19 @@ public class UserControllerTest extends AbstractControllerTest {
 
     @Test
     void testDelete() throws Exception {
-        mockMvc.perform(delete(REST_URL + USER_ID))
+        mockMvc.perform(delete(REST_URL + USER_ID)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isNoContent());
-        assertMatch(repository.getAll(), ADMIN,JON,PETER);
+        assertMatch(repository.getAll(), ADMIN,JON,NEW_USER,PETER);
     }
 
     @Test
     void testUpdate() throws Exception {
         User updated = getUpdated();
 
-        mockMvc.perform(put(REST_URL + USER_ID).contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put(REST_URL + USER_ID)
+                .with(userHttpBasic(USER))
+                .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
 
@@ -68,6 +72,7 @@ public class UserControllerTest extends AbstractControllerTest {
     void testCreate() throws Exception {
         User created = getCreated();
         ResultActions action = mockMvc.perform(post(REST_URL)
+                .with(userHttpBasic(USER))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(created)));
 
@@ -76,12 +81,13 @@ public class UserControllerTest extends AbstractControllerTest {
 
         assertMatch(returned, created);
 
-        assertMatch(repository.getAll(),ADMIN,JON,PETER,USER, created);
+        assertMatch(repository.getAll(),ADMIN,JON,NEW_USER,PETER,USER, created);
     }
 
     @Test
     void testGetAll() throws Exception {
-        mockMvc.perform(get(REST_URL))
+        mockMvc.perform(get(REST_URL)
+                .with(userHttpBasic(USER)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))

@@ -1,6 +1,8 @@
 package ua.petproject.model;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
@@ -16,12 +18,13 @@ public class Dish extends AbstractNamedEntity {
     @Column(name = "calories", nullable = false)
     private double calories;
 
-    public Dish(){}
+    public Dish() {
+    }
 
     public Dish(Integer id, String name, BigDecimal price, double calories) {
-        super(id,name);
+        super(id, name);
         this.price = price;
-        this.calories=calories;
+        this.calories = calories;
     }
 
     public BigDecimal getPrice() {

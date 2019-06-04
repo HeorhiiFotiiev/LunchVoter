@@ -8,8 +8,8 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name ="votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id","restaurant_id"})} )
-public class Vote extends AbstractBaseEntity{
+@Table(name = "votes", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "restaurant_id"})})
+public class Vote extends AbstractBaseEntity {
 
     @Column(name = "VOTE_DATE")
     private LocalDateTime DateTime;
@@ -24,12 +24,12 @@ public class Vote extends AbstractBaseEntity{
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Restaurant restaurant;
 
-    public Vote(){}
+    public Vote() {
+    }
 
-    public Vote(Integer id, LocalDateTime dateTime, User user, Restaurant restaurant) {
+    public Vote(Integer id, LocalDateTime dateTime, Restaurant restaurant) {
         super(id);
         DateTime = dateTime;
-        this.user = user;
         this.restaurant = restaurant;
     }
 

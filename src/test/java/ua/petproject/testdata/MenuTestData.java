@@ -12,7 +12,7 @@ import static ua.petproject.model.AbstractBaseEntity.START_SEQ;
 import static ua.petproject.testdata.DishTestData.*;
 
 public class MenuTestData {
-    public static final int MENU1_ID = START_SEQ + 14;
+    public static final int MENU1_ID = START_SEQ + 15;
 
     public static final Menu SUMMER_MENU = new Menu(MENU1_ID,"Летнее Меню", Set.of(PAELLA, SELYANSKI_POTATO));
     public static final Menu CANTEEN_MENU = new Menu(MENU1_ID+1,"Меню столовой", Set.of());
